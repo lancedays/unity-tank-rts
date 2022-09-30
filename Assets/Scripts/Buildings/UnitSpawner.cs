@@ -14,13 +14,11 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     [Command]
     private void CmdSpawnUnit()
     {
-
-for(var i = 0; i < 1000 ; i++) {
-        GameObject unitIsntance = Instantiate(unitPrefab, unitSpawnPoint.position, unitSpawnPoint.rotation);
-        NetworkServer.Spawn(unitIsntance, connectionToClient);
-}
-
-
+        for (var i = 0; i < 1; i++)
+        {
+            GameObject unitIsntance = Instantiate(unitPrefab, unitSpawnPoint.position, unitSpawnPoint.rotation);
+            NetworkServer.Spawn(unitIsntance, connectionToClient);
+        }
     }
 
 
@@ -32,8 +30,8 @@ for(var i = 0; i < 1000 ; i++) {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button != PointerEventData.InputButton.Left) { return; }
-        if(!hasAuthority) { return; }
+        if (eventData.button != PointerEventData.InputButton.Left) { return; }
+        if (!hasAuthority) { return; }
         CmdSpawnUnit();
     }
 
