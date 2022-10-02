@@ -17,15 +17,16 @@ public class UnitSelectionHandler : NetworkBehaviour
 
     private void Update()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             // Start selection area
             foreach (Unit selectedUnit in SelectedUnits)
             {
                 selectedUnit.Deslect();
-                SelectedUnits.Clear();
             }
-        } else if(Mouse.current.leftButton.wasReleasedThisFrame)
+            SelectedUnits.Clear();
+        }
+        else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             ClearSelectionArea();
         }
@@ -34,15 +35,15 @@ public class UnitSelectionHandler : NetworkBehaviour
     private void ClearSelectionArea()
     {
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask)) { return; }
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask)) { return; }
 
-        if(!hit.collider.TryGetComponent<Unit>(out Unit unit)) { return; }
+        if (!hit.collider.TryGetComponent<Unit>(out Unit unit)) { return; }
 
-        if(!unit.hasAuthority) { return; }
+        if (!unit.hasAuthority) { return; }
 
         SelectedUnits.Add(unit);
 
-        foreach(Unit selectedUnit in SelectedUnits)
+        foreach (Unit selectedUnit in SelectedUnits)
         {
             selectedUnit.Select();
         }
